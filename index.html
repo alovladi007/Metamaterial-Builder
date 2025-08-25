@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metamaterials Research Lab - Full-Stack Application</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+            display: flex;
+            align-items: center;
+        }
+        .subtitle {
+            color: #666;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+        }
+        .alert {
+            background: linear-gradient(135deg, #fff5f5 0%, #fed7d7 100%);
+            border: 2px solid #fc8181;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .alert h3 {
+            color: #c53030;
+            margin-bottom: 10px;
+        }
+        .success-box {
+            background: linear-gradient(135deg, #f0fff4 0%, #c6f6d5 100%);
+            border: 2px solid #68d391;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .code-block {
+            background: #1a202c;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        .code-block .comment {
+            color: #68d391;
+        }
+        .buttons {
+            display: flex;
+            gap: 15px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+        }
+        .btn-green {
+            background: #48bb78;
+        }
+        .btn-orange {
+            background: #ed8936;
+        }
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        .feature {
+            padding: 20px;
+            background: #f7fafc;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+        .feature h4 {
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        .tech {
+            background: #edf2f7;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            color: #4a5568;
+        }
+        .status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            background: #f7fafc;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #48bb78;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>
+            <span style="font-size: 1.2em; margin-right: 15px;">🔬</span>
+            Metamaterials Research Lab
+        </h1>
+        <div class="subtitle">
+            Full-Stack Electromagnetic Simulation Platform for Negative Index Metamaterials
+        </div>
+
+        <div class="alert">
+            <h3>⚠️ This is a Full-Stack Application - Not a Static Website!</h3>
+            <p>This project includes a <strong>FastAPI backend</strong> and <strong>Next.js frontend</strong> that require servers to run. GitHub Pages can only host static websites, so you need to run this application locally or deploy it to a cloud platform.</p>
+        </div>
+
+        <div class="success-box">
+            <h3>✅ Your Code is Successfully in GitHub!</h3>
+            <p>All your metamaterials simulation code is safely stored in your repository. To use the application, follow the installation instructions below.</p>
+        </div>
+
+        <h2 style="margin-top: 30px; color: #2d3748;">🚀 How to Run the Application</h2>
+        
+        <h3 style="margin-top: 25px; color: #4a5568;">Option 1: Quick Start with Docker</h3>
+        <div class="code-block">
+<span class="comment"># Clone your repository</span>
+git clone https://github.com/alovladi007/Metamaterial-Builder.git
+cd Metamaterial-Builder/metamaterials-lab
+
+<span class="comment"># Run with Docker Compose</span>
+cd docker
+docker-compose up
+
+<span class="comment"># Application will be available at:</span>
+<span class="comment"># Frontend: http://localhost:3000</span>
+<span class="comment"># API: http://localhost:8000/docs</span>
+        </div>
+
+        <h3 style="margin-top: 25px; color: #4a5568;">Option 2: Manual Setup</h3>
+        <div class="code-block">
+<span class="comment"># Clone your repository</span>
+git clone https://github.com/alovladi007/Metamaterial-Builder.git
+cd Metamaterial-Builder/metamaterials-lab
+
+<span class="comment"># Terminal 1: Start Backend API</span>
+cd api
+pip install -r requirements.txt
+python main.py
+
+<span class="comment"># Terminal 2: Start Frontend</span>
+cd client
+npm install
+npm run dev
+
+<span class="comment"># Open http://localhost:3000 in your browser</span>
+        </div>
+
+        <div class="buttons">
+            <a href="https://github.com/alovladi007/Metamaterial-Builder" class="btn">
+                📦 View Repository
+            </a>
+            <a href="https://github.com/alovladi007/Metamaterial-Builder/tree/main/metamaterials-lab" class="btn btn-green">
+                📁 Browse Source Code
+            </a>
+            <a href="https://github.com/alovladi007/Metamaterial-Builder/archive/refs/heads/main.zip" class="btn btn-orange">
+                ⬇️ Download ZIP
+            </a>
+        </div>
+
+        <h2 style="margin-top: 30px; color: #2d3748;">✨ Application Features</h2>
+        <div class="features">
+            <div class="feature">
+                <h4>⚡ EM Simulation Engine</h4>
+                <p>Complete electromagnetic simulation with S-parameter calculation and Fabry-Perot effects</p>
+            </div>
+            <div class="feature">
+                <h4>🎯 Negative Index Detection</h4>
+                <p>Automatically detects negative refractive index bands (1.1-1.5 THz range)</p>
+            </div>
+            <div class="feature">
+                <h4>📊 Parameter Retrieval</h4>
+                <p>NRW method for extracting n, ε, μ from S-parameters with branch selection</p>
+            </div>
+            <div class="feature">
+                <h4>🔬 Physics Models</h4>
+                <p>Lorentz model for μ(ω) and Drude model for ε(ω) implementations</p>
+            </div>
+            <div class="feature">
+                <h4>🎨 Modern UI</h4>
+                <p>Beautiful React interface with real-time visualization and Tailwind CSS</p>
+            </div>
+            <div class="feature">
+                <h4>📚 API Documentation</h4>
+                <p>Interactive Swagger/OpenAPI documentation for all endpoints</p>
+            </div>
+        </div>
+
+        <h2 style="margin-top: 30px; color: #2d3748;">🛠️ Technology Stack</h2>
+        <div class="tech-stack">
+            <span class="tech">Python 3.11+</span>
+            <span class="tech">FastAPI</span>
+            <span class="tech">Next.js 14</span>
+            <span class="tech">React 18</span>
+            <span class="tech">TypeScript</span>
+            <span class="tech">Tailwind CSS</span>
+            <span class="tech">NumPy</span>
+            <span class="tech">Pandas</span>
+            <span class="tech">Docker</span>
+        </div>
+
+        <h2 style="margin-top: 30px; color: #2d3748;">📂 Repository Structure</h2>
+        <div class="code-block">
+metamaterials-lab/
+├── api/                 <span class="comment"># FastAPI backend server</span>
+├── client/              <span class="comment"># Next.js frontend application</span>
+├── python-sim/          <span class="comment"># Python simulation scripts</span>
+├── docker/              <span class="comment"># Docker configuration files</span>
+├── docs/                <span class="comment"># Documentation</span>
+├── README.md            <span class="comment"># Project documentation</span>
+├── DEPLOYMENT.md        <span class="comment"># Deployment guide</span>
+└── test_system.py       <span class="comment"># System test suite</span>
+        </div>
+
+        <h2 style="margin-top: 30px; color: #2d3748;">☁️ Cloud Deployment Options</h2>
+        <p style="color: #4a5568; margin-bottom: 15px;">To make your application accessible online, deploy to one of these platforms:</p>
+        
+        <div class="status">
+            <div class="status-dot"></div>
+            <strong>Vercel:</strong> Deploy the Next.js frontend (free tier available)
+        </div>
+        <div class="status">
+            <div class="status-dot"></div>
+            <strong>Render:</strong> Host the FastAPI backend (free tier available)
+        </div>
+        <div class="status">
+            <div class="status-dot"></div>
+            <strong>Railway:</strong> Full-stack deployment in one platform
+        </div>
+        <div class="status">
+            <div class="status-dot"></div>
+            <strong>Heroku:</strong> Deploy with Docker containers
+        </div>
+
+        <div style="margin-top: 40px; padding-top: 30px; border-top: 1px solid #e2e8f0; text-align: center; color: #718096;">
+            <p style="margin-bottom: 10px;">
+                <strong>Need Help?</strong> 
+                <a href="https://github.com/alovladi007/Metamaterial-Builder/issues" style="color: #667eea; text-decoration: none;">Open an Issue</a>
+                •
+                <a href="https://github.com/alovladi007/Metamaterial-Builder/blob/main/metamaterials-lab/README.md" style="color: #667eea; text-decoration: none;">Read Documentation</a>
+            </p>
+            <p>Built with ❤️ for metamaterials research</p>
+        </div>
+    </div>
+</body>
+</html>
