@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  api:
+    build:
+      context: ../api
+      dockerfile: Dockerfile
+    container_name: metamaterials-api
+    ports:
+      - "8000:8000"
+    volumes:
+      - ../api:/app
+      - ../python-sim/sample_data:/app/sample_data
+    environment:
+      - API_HOST=0.0.0.0
+      - API_PORT=8000
+    
+  client:
+    build:
+      context: ../client
+      dockerfile: Dockerfile
+    container_name: metamaterials-client
+    ports:
+      - "3000:3000"
+    volumes:
+      - ../client:/app
+      - /app/node_modules
+      - /app/.next
+    environment:
+      - NODE_ENV=development
+    depends_on:
+      - api
+
+networks:
+  default:
+    name: metamaterials-network
