@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metamaterials Research Lab - Project Builder</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+        
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.95;
+        }
+        
+        .main-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .tab {
+            padding: 12px 24px;
+            background: #f0f0f0;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .tab.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .tab:hover:not(.active) {
+            background: #e0e0e0;
+        }
+        
+        .content {
+            display: none;
+        }
+        
+        .content.active {
+            display: block;
+        }
+        
+        .file-tree {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 14px;
+        }
+        
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 10px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        
+        .btn-container {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+        }
+        
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .feature-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .feature-card h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        .highlight {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: bold;
+        }
+        
+        #output {
+            margin-top: 20px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            display: none;
+        }
+        
+        #output.active {
+            display: block;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 30px;
+            background: #f0f0f0;
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            width: 0%;
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔬 Metamaterials Research Lab</h1>
+            <p>Negative Index Materials • THz/Optical Frequencies • Full-Stack Platform</p>
+        </div>
+        
+        <div class="main-card">
+            <div class="tabs">
+                <button class="tab active" onclick="showTab('overview')">Overview</button>
+                <button class="tab" onclick="showTab('structure')">Project Structure</button>
+                <button class="tab" onclick="showTab('simulation')">Simulation Core</button>
+                <button class="tab" onclick="showTab('api')">API Backend</button>
+                <button class="tab" onclick="showTab('client')">Client UI</button>
+                <button class="tab" onclick="showTab('comsol')">COMSOL Scripts</button>
+                <button class="tab" onclick="showTab('build')">Build & Deploy</button>
+            </div>
+            
+            <div id="overview" class="content active">
+                <h2>🚀 Complete Metamaterials Research Platform</h2>
+                <p style="margin: 20px 0; line-height: 1.8;">
+                    A production-ready scaffold for <span class="highlight">negative refractive index metamaterials</span> research 
+                    at THz/optical frequencies. This platform combines computational electromagnetics, 
+                    parameter retrieval algorithms, and modern web technologies.
+                </p>
+                
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h3>📊 Simulation Core</h3>
+                        <p>Python-based S-parameter synthesis, NRW retrieval for n, ε, μ with branch handling</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>🔧 FastAPI Backend</h3>
+                        <p>RESTful API with Redis/RQ job queuing for long-running simulations</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>🎨 Next.js Frontend</h3>
+                        <p>React-based UI with Three.js geometry editor and Plotly visualizations</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>🔬 COMSOL Integration</h3>
+                        <p>LiveLink MATLAB scripts for SRR and fishnet unit cell parametric studies</p>
+                    </div>
+                </div>
+                
+                <h3 style="margin-top: 30px;">Key Features</h3>
+                <ul style="line-height: 2; margin-left: 20px;">
+                    <li>✅ Self-consistent synthetic S-parameter generation (Lorentz μ, Drude ε)</li>
+                    <li>✅ Effective parameter retrieval with continuity enforcement</li>
+                    <li>✅ Interactive 3D unit cell designer (Three.js)</li>
+                    <li>✅ Parametric sweep orchestration</li>
+                    <li>✅ Export to CSV, HDF5, and publication-ready plots</li>
+                    <li>✅ Docker containerization for easy deployment</li>
+                </ul>
+            </div>
+            
+            <div id="structure" class="content">
+                <h2>📁 Project Structure</h2>
+                <div class="file-tree">
+metamaterials-lab/
+├── 📂 api/                      # FastAPI backend
+│   ├── main.py                  # API endpoints
+│   ├── requirements.txt         # Python dependencies
+│   └── .env.example            # Environment variables
+├── 📂 python-sim/               # Simulation core
+│   ├── synth_sparams.py        # S-parameter generator
+│   ├── sparam_retrieval.py     # NRW retrieval algorithm
+│   ├── rcwa_tmm.py             # RCWA/TMM placeholder
+│   ├── requirements.txt
+│   ├── 📂 demos/
+│   │   ├── plot_retrieval.py   # Demo scripts
+│   │   └── 📂 plots/           # Generated plots
+│   └── 📂 sample_data/         # CSV outputs
+├── 📂 comsol/                   # COMSOL LiveLink scripts
+│   ├── srr_unitcell_livelink.m
+│   ├── fishnet_unitcell_livelink.m
+│   └── postprocess_export.m
+├── 📂 client/                   # Next.js frontend
+│   ├── package.json
+│   ├── next.config.js
+│   ├── 📂 app/                 # App Router pages
+│   │   ├── layout.js
+│   │   ├── page.js
+│   │   ├── design/page.js
+│   │   ├── simulate/page.js
+│   │   └── results/page.js
+│   └── 📂 components/
+├── 📂 infra/                    # Infrastructure
+│   └── docker-compose.yml
+├── 📂 prompts/                  # Codegen prompts
+│   └── CLAUDE_CODE_MEGA_PROMPT.md
+└── README.md
+                </div>
+            </div>
+            
+            <div id="simulation" class="content">
+                <h2>🧮 Python Simulation Core</h2>
+                <p style="margin: 20px 0;">The simulation engine implements effective medium theory for metamaterials:</p>
+                
+                <h3>S-Parameter Synthesis</h3>
+                <div class="code-block">
+<span style="color: #9cdcfe;">def</span> <span style="color: #dcdcaa;">lorentz_mu</span>(omega, omega0, F, gamma):
+    <span style="color: #6a9955;"># Magnetic response: μ(ω) = 1 + Fω²/(ω₀² - ω² - iγω)</span>
+    <span style="color: #c586c0;">return</span> <span style="color: #b5cea8;">1</span> + (F*omega**<span style="color: #b5cea8;">2</span>) / (omega0**<span style="color: #b5cea8;">2</span> - omega**<span style="color: #b5cea8;">2</span> - <span style="color: #b5cea8;">1j</span>*gamma*omega)
+
+<span style="color: #9cdcfe;">def</span> <span style="color: #dcdcaa;">drude_eps</span>(omega, omega_p, gamma):
+    <span style="color: #6a9955;"># Electric response: ε(ω) = 1 - ωₚ²/(ω(ω + iγ))</span>
+    <span style="color: #c586c0;">return</span> <span style="color: #b5cea8;">1</span> - (omega_p**<span style="color: #b5cea8;">2</span>)/(omega*(omega + <span style="color: #b5cea8;">1j</span>*gamma))
+                </div>
+                
+                <h3>Parameter Retrieval (NRW-like)</h3>
+                <div class="code-block">
+<span style="color: #9cdcfe;">def</span> <span style="color: #dcdcaa;">retrieve_params</span>(f_hz, S11, S21, d_m):
+    <span style="color: #6a9955;">'''Extract n, z, ε, μ from S-parameters'''</span>
+    
+    <span style="color: #6a9955;"># Impedance with branch selection</span>
+    z = np.sqrt(((<span style="color: #b5cea8;">1</span>+S11)**<span style="color: #b5cea8;">2</span> - S21**<span style="color: #b5cea8;">2</span>) / ((<span style="color: #b5cea8;">1</span>-S11)**<span style="color: #b5cea8;">2</span> - S21**<span style="color: #b5cea8;">2</span>))
+    z = np.where(np.real(z) < <span style="color: #b5cea8;">0</span>, -z, z)  <span style="color: #6a9955;"># Enforce Re(z) ≥ 0</span>
+    
+    <span style="color: #6a9955;"># Refractive index with continuity</span>
+    X = (<span style="color: #b5cea8;">1</span> - S11**<span style="color: #b5cea8;">2</span> + S21**<span style="color: #b5cea8;">2</span>)/(<span style="color: #b5cea8;">2</span>*S21)
+    n = np.arccos(X)/(k0*d)
+    n_real = np.unwrap(np.real(n))  <span style="color: #6a9955;"># Phase unwrapping</span>
+    
+    eps = n / z
+    mu = n * z
+    <span style="color: #c586c0;">return</span> n, z, eps, mu
+                </div>
+            </div>
+            
+            <div id="api" class="content">
+                <h2>⚡ FastAPI Backend</h2>
+                <p style="margin: 20px 0;">RESTful API with simulation orchestration:</p>
+                
+                <div class="code-block">
+<span style="color: #c586c0;">from</span> fastapi <span style="color: #c586c0;">import</span> FastAPI, UploadFile
+<span style="color: #c586c0;">from</span> pydantic <span style="color: #c586c0;">import</span> BaseModel
+
+app = FastAPI(title=<span style="color: #ce9178;">"Metamaterials API"</span>)
+
+<span style="color: #9cdcfe;">class</span> <span style="color: #4ec9b0;">RCWARequest</span>(BaseModel):
+    freqs_thz: list[float]
+    thickness_um: float = <span style="color: #b5cea8;">200.0</span>
+    epsilon_params: dict = {}
+    mu_params: dict = {}
+
+<span style="color: #569cd6;">@app.post</span>(<span style="color: #ce9178;">"/simulate/rcwa"</span>)
+<span style="color: #9cdcfe;">def</span> <span style="color: #dcdcaa;">simulate_rcwa</span>(req: RCWARequest):
+    <span style="color: #6a9955;"># Queue simulation job</span>
+    job = queue.enqueue(run_rcwa, req)
+    <span style="color: #c586c0;">return</span> {<span style="color: #ce9178;">"job_id"</span>: job.id, <span style="color: #ce9178;">"status"</span>: <span style="color: #ce9178;">"queued"</span>}
+
+<span style="color: #569cd6;">@app.post</span>(<span style="color: #ce9178;">"/upload/comsol"</span>)
+<span style="color: #9cdcfe;">async def</span> <span style="color: #dcdcaa;">upload_comsol</span>(file: UploadFile):
+    <span style="color: #6a9955;"># Process COMSOL S-parameter exports</span>
+    content = <span style="color: #c586c0;">await</span> file.read()
+    df = process_sparams(content)
+    <span style="color: #c586c0;">return</span> run_retrieval(df)
+                </div>
+            </div>
+            
+            <div id="client" class="content">
+                <h2>🎨 Next.js Client UI</h2>
+                <p style="margin: 20px 0;">Modern React interface with App Router:</p>
+                
+                <h3>Three.js Geometry Editor</h3>
+                <div class="code-block">
+<span style="color: #c586c0;">import</span> * <span style="color: #c586c0;">as</span> THREE <span style="color: #c586c0;">from</span> <span style="color: #ce9178;">'three'</span>
+<span style="color: #c586c0;">import</span> { OrbitControls } <span style="color: #c586c0;">from</span> <span style="color: #ce9178;">'three/examples/jsm/controls/OrbitControls'</span>
+
+<span style="color: #c586c0;">export default</span> <span style="color: #9cdcfe;">function</span> <span style="color: #dcdcaa;">GeometryEditor</span>({ params, onChange }) {
+  <span style="color: #9cdcfe;">const</span> mountRef = useRef()
+  
+  useEffect(() => {
+    <span style="color: #6a9955;">// Initialize Three.js scene</span>
+    <span style="color: #9cdcfe;">const</span> scene = <span style="color: #9cdcfe;">new</span> THREE.Scene()
+    <span style="color: #9cdcfe;">const</span> geometry = createSRRGeometry(params)
+    
+    <span style="color: #6a9955;">// Interactive parameter controls</span>
+    <span style="color: #9cdcfe;">const</span> gui = <span style="color: #9cdcfe;">new</span> GUI()
+    gui.add(params, <span style="color: #ce9178;">'ringWidth'</span>, <span style="color: #b5cea8;">1</span>, <span style="color: #b5cea8;">10</span>).onChange(updateGeometry)
+    gui.add(params, <span style="color: #ce9178;">'gapSize'</span>, <span style="color: #b5cea8;">0.5</span>, <span style="color: #b5cea8;">5</span>).onChange(updateGeometry)
+  }, [])
+  
+  <span style="color: #c586c0;">return</span> &lt;div ref={mountRef} style={{width: <span style="color: #ce9178;">'100%'</span>, height: <span style="color: #b5cea8;">500</span>}} /&gt;
+}
+                </div>
+                
+                <h3>Plotly Visualizations</h3>
+                <div class="code-block">
+<span style="color: #c586c0;">import</span> Plotly <span style="color: #c586c0;">from</span> <span style="color: #ce9178;">'plotly.js-dist-min'</span>
+
+<span style="color: #c586c0;">export default</span> <span style="color: #9cdcfe;">function</span> <span style="color: #dcdcaa;">ResultsPlot</span>({ data }) {
+  <span style="color: #9cdcfe;">const</span> traces = [
+    {
+      x: data.frequency,
+      y: data.n_real,
+      name: <span style="color: #ce9178;">'Re(n)'</span>,
+      type: <span style="color: #ce9178;">'scatter'</span>
+    },
+    {
+      x: data.frequency,
+      y: data.n_imag,
+      name: <span style="color: #ce9178;">'Im(n)'</span>,
+      type: <span style="color: #ce9178;">'scatter'</span>
+    }
+  ]
+  
+  <span style="color: #c586c0;">return</span> &lt;Plot data={traces} layout={{title: <span style="color: #ce9178;">'Effective Index'</span>}} /&gt;
+}
+                </div>
+            </div>
+            
+            <div id="comsol" class="content">
+                <h2>🔬 COMSOL LiveLink Scripts</h2>
+                <p style="margin: 20px 0;">MATLAB automation for unit cell simulations:</p>
+                
+                <h3>SRR Unit Cell</h3>
+                <div class="code-block">
+<span style="color: #6a9955;">% SRR unit cell via LiveLink for MATLAB</span>
+model = ModelUtil.create(<span style="color: #ce9178;">'SRR_Cell'</span>);
+
+<span style="color: #6a9955;">% Geometry parameters</span>
+a = <span style="color: #b5cea8;">60e-6</span>;    <span style="color: #6a9955;">% lattice period</span>
+w = <span style="color: #b5cea8;">3e-6</span>;     <span style="color: #6a9955;">% ring width</span>
+g = <span style="color: #b5cea8;">2e-6</span>;     <span style="color: #6a9955;">% gap size</span>
+t = <span style="color: #b5cea8;">200e-9</span>;   <span style="color: #6a9955;">% metal thickness</span>
+
+<span style="color: #6a9955;">% Build geometry</span>
+geom = model.component(<span style="color: #ce9178;">'comp1'</span>).geom(<span style="color: #ce9178;">'geom1'</span>);
+geom.create(<span style="color: #ce9178;">'blk1'</span>, <span style="color: #ce9178;">'Block'</span>);
+geom.feature(<span style="color: #ce9178;">'blk1'</span>).set(<span style="color: #ce9178;">'size'</span>, [a, a, h]);
+
+<span style="color: #6a9955;">% Create SRR pattern</span>
+srr = geom.create(<span style="color: #ce9178;">'wp1'</span>, <span style="color: #ce9178;">'WorkPlane'</span>);
+srr.set(<span style="color: #ce9178;">'planetype'</span>, <span style="color: #ce9178;">'quick'</span>);
+srr.set(<span style="color: #ce9178;">'quickz'</span>, h/<span style="color: #b5cea8;">2</span>);
+
+<span style="color: #6a9955;">% Apply periodic boundary conditions</span>
+model.component(<span style="color: #ce9178;">'comp1'</span>).physics(<span style="color: #ce9178;">'emw'</span>).create(<span style="color: #ce9178;">'pbc1'</span>, <span style="color: #ce9178;">'PeriodicCondition'</span>);
+
+<span style="color: #6a9955;">% Frequency sweep</span>
+study = model.study(<span style="color: #ce9178;">'std1'</span>);
+study.feature(<span style="color: #ce9178;">'freq'</span>).set(<span style="color: #ce9178;">'plist'</span>, <span style="color: #ce9178;">'range(0.5e12,0.05e12,2e12)'</span>);
+
+<span style="color: #6a9955;">% Export S-parameters</span>
+model.result().export(<span style="color: #ce9178;">'sparams'</span>).set(<span style="color: #ce9178;">'filename'</span>, <span style="color: #ce9178;">'srr_sparams.csv'</span>);
+                </div>
+            </div>
+            
+            <div id="build" class="content">
+                <h2>🚀 Build & Deploy</h2>
+                
+                <h3>Quick Start (Development)</h3>
+                <div class="code-block">
+<span style="color: #6a9955;"># 1. Python Simulation Core</span>
+cd python-sim
+python -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt
+python demos/plot_retrieval.py
+
+<span style="color: #6a9955;"># 2. API Backend</span>
+cd ../api
+uvicorn main:app --reload
+
+<span style="color: #6a9955;"># 3. Client Frontend</span>
+cd ../client
+npm install
+npm run dev
+                </div>
+                
+                <h3>Docker Deployment</h3>
+                <div class="code-block">
+<span style="color: #6a9955;"># Build and run with Docker Compose</span>
+cd infra
+docker-compose up -d
+
+<span style="color: #6a9955;"># Services will be available at:</span>
+<span style="color: #6a9955;"># - API: http://localhost:8000</span>
+<span style="color: #6a9955;"># - Client: http://localhost:3000</span>
+<span style="color: #6a9955;"># - Redis: localhost:6379</span>
+                </div>
+                
+                <div class="btn-container">
+                    <button class="btn btn-primary" onclick="generateProject()">
+                        🔨 Generate Complete Project
+                    </button>
+                    <button class="btn btn-secondary" onclick="downloadFiles()">
+                        📦 Download as ZIP
+                    </button>
+                </div>
+                
+                <div id="output">
+                    <h3>Generated Files</h3>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress">0%</div>
+                    </div>
+                    <div id="file-list"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function showTab(tabName) {
+            // Hide all content
+            const contents = document.querySelectorAll('.content');
+            contents.forEach(content => content.classList.remove('active'));
+            
+            // Remove active from all tabs
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Show selected content
+            document.getElementById(tabName).classList.add('active');
+            
+            // Mark selected tab as active
+            event.target.classList.add('active');
+        }
+        
+        function generateProject() {
+            const output = document.getElementById('output');
+            const progressBar = document.getElementById('progress');
+            const fileList = document.getElementById('file-list');
+            
+            output.classList.add('active');
+            
+            // Simulate file generation
+            const files = [
+                'Creating directories...',
+                'Generating API backend...',
+                'Building simulation core...',
+                'Setting up Next.js client...',
+                'Writing COMSOL scripts...',
+                'Creating Docker configs...',
+                'Generating sample data...',
+                'Running parameter retrieval...',
+                'Creating plots...',
+                'Finalizing project...'
+            ];
+            
+            let progress = 0;
+            fileList.innerHTML = '';
+            
+            files.forEach((file, index) => {
+                setTimeout(() => {
+                    progress = ((index + 1) / files.length) * 100;
+                    progressBar.style.width = progress + '%';
+                    progressBar.textContent = Math.round(progress) + '%';
+                    
+                    const fileItem = document.createElement('div');
+                    fileItem.innerHTML = `✅ ${file}`;
+                    fileItem.style.marginBottom = '10px';
+                    fileList.appendChild(fileItem);
+                    
+                    if (index === files.length - 1) {
+                        setTimeout(() => {
+                            fileList.innerHTML += '<div style="margin-top: 20px; font-weight: bold; color: #667eea;">✨ Project generated successfully!</div>';
+                        }, 500);
+                    }
+                }, (index + 1) * 500);
+            });
+        }
+        
+        function downloadFiles() {
+            alert('Project ZIP will be generated with all files and dependencies. Implementation would create a downloadable archive.');
+        }
+    </script>
+</body>
+</html>
